@@ -111,7 +111,7 @@ if CLIENT then
   function HL2PICKUP:DrawItemIcon(x, y, itemClass, alpha, horAlign, verAlign)
     alpha = alpha or 1;
     horAlign = horAlign or TEXT_ALIGN_RIGHT;
-    verAlign = verAlign or TEXT_ALIGN_CENTER;
+    verAlign = verAlign or TEXT_ALIGN_BOTTOM;
 
     local colour = HL2PICKUP:GetColour();
 
@@ -171,7 +171,7 @@ if CLIENT then
       end
 
       -- Draw ammo name
-      draw.DrawText(itemName, NAME_FONT, x - w * 0.66, y - (h * rows) * 0.5, Color(colour.r, colour.g, colour.b, colour.a * alpha), TEXT_ALIGN_CENTER);
+      draw.DrawText(itemName, NAME_FONT, x - w * 0.66, y - (h * rows), Color(colour.r, colour.g, colour.b, colour.a * alpha), TEXT_ALIGN_CENTER);
     end
   end
 end
