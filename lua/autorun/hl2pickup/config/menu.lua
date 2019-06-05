@@ -53,6 +53,12 @@ if CLIENT then
       Blue = "hl2pickup_colour_crit_b"
       }
     );
+
+    panel:AddControl( "Button", {
+  		Label = "Reset settings to default",
+  		Command = "hl2pickup_reset",
+  		}
+    );
   end
 
   hook.Add( "PopulateToolMenu", "hl2pickup_menu_cl", function()
