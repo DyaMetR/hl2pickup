@@ -130,7 +130,7 @@ You can add custom icons for your items, ammunition types and/or weapons.
 `HL2PICKUP:AddWeaponImage(weaponClass, texture, w, h, coloured)`
 > Adds either a .png or a .vtf image as an icon
 >
-> **@param** {*string*} item class
+> **@param** {*string*} weapon class
 >
 > **@param** {*IMaterial|number*} texture
 >
@@ -143,7 +143,7 @@ You can add custom icons for your items, ammunition types and/or weapons.
 `HL2PICKUP:AddWeaponImageUV(weaponClass, texture, w, h, u1, v1, u2, v2, fileW, fileH, coloured)`
 > Adds either a .png or a .vtf image as an icon
 >
-> **@param** {*string*} item class
+> **@param** {*string*} weapon class
 >
 > **@param** {*IMaterial|number*} texture
 >
