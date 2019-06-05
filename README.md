@@ -114,6 +114,11 @@ You can add custom icons for your items, ammunition types and/or weapons.
 >
 > **@param** {*boolean|nil*} coloured
 
+`HL2PICKUP:AddItemOverride(itemClass)`
+> Avoids the system to add an item to the tray
+>
+> **@param** {*string*} item class
+
 `HL2PICKUP:AddWeaponIcon(weaponClass, char, font, x, y)`
 > Adds a font based weapon icon
 >
@@ -164,9 +169,4 @@ You can add custom icons for your items, ammunition types and/or weapons.
 > **@param** {*number|nil*} file height
 >
 > **@param** {*boolean|nil*} coloured
-
-`HL2PICKUP:AddItemOverride(itemClass)`
-> Avoids the system to add an item to the tray
->
-> **@param** {*string*} item class
 
