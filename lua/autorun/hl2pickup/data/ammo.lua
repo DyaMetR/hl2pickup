@@ -6,6 +6,7 @@
 if CLIENT then
 
   local HL2_FONT = "hl2pickup_ammo";
+  local DM_FONT = "hl2pickup_ammo2";
 
   -- Default Half-Life 2 ammunition types
   HL2PICKUP:AddAmmoIcon("Pistol", "p", HL2_FONT);
@@ -18,7 +19,7 @@ if CLIENT then
   HL2PICKUP:AddAmmoIcon("XBowBolt", "w", HL2_FONT);
   HL2PICKUP:AddAmmoIcon("Grenade", "v", HL2_FONT);
   HL2PICKUP:AddAmmoIcon("RPG_Round", "x", HL2_FONT);
-  HL2PICKUP:AddAmmoIcon("slam", "*", HL2_FONT, nil, 12);
+  HL2PICKUP:AddAmmoIcon("slam", "*", DM_FONT, nil, 12);
 
 end
 

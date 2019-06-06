@@ -24,6 +24,9 @@ if CLIENT then
   HL2PICKUP:AddWeaponIcon("weapon_slam", "o", HL2_FONT);
   HL2PICKUP:AddWeaponIcon("weapon_bugbait", "j", HL2_FONT);
 
+  HL2PICKUP:AddWeaponIcon("weapon_anabelle", "b", HL2_FONT);
+  HL2PICKUP:AddWeaponIcon("weapon_alyxgun", "b", RB_FONT);
+
   -- Half-Life 2 items
   HL2PICKUP:AddItemIcon("item_healthkit", "+", HL2_FONT, nil, -17);
   HL2PICKUP:AddItemIcon("item_battery", "*", HL2_FONT, nil, -17);

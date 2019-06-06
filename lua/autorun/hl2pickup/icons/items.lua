@@ -164,9 +164,9 @@ if CLIENT then
       local w, h = surface.GetTextSize(itemName);
 
       -- Add 'item icon' like in 'gauss ammo icon'
-      local rows = 1;
+      local rows = 3;
       if (HL2PICKUP:GetItemDisplayMode() < 2) then
-        rows = 3;
+        rows = 4;
         itemName = itemName .. "\nitem\nicon";
       end
 
