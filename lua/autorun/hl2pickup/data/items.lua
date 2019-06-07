@@ -6,7 +6,7 @@
 if CLIENT then
 
   local HL2_FONT = "hl2pickup_weapon";
-  local RB_FONT = "holohud_weapon_icon_rb";
+  local RB_FONT = "hl2pickup_icon_rb";
 
   -- Half-Life 2 weapons
   HL2PICKUP:AddWeaponIcon("weapon_physgun", "h", HL2_FONT);

@@ -9,10 +9,19 @@ if CLIENT then
   local WIDTH, HEIGHT = 128, 64;
   local INVALID_CHAR = "�";
   local DEFAULT_FONT = "hl2pickup_weapon";
+  local DEFAULT_RB_FONT = "hl2pickup_icon_rb";
 
   -- Default fonts
   surface.CreateFont(DEFAULT_FONT, {
     font = "HalfLife2",
+    size = 102 * HL2PICKUP:GetScale(),
+    weight = 500,
+    antialias = true,
+    additive = true
+  });
+
+  surface.CreateFont(DEFAULT_RB_FONT, {
+    font = "RealBeta's Weapon Icons",
     size = 102 * HL2PICKUP:GetScale(),
     weight = 500,
     antialias = true,
