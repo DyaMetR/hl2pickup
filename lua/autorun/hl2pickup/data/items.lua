@@ -31,6 +31,7 @@ if CLIENT then
   HL2PICKUP:AddItemIcon("item_healthkit", "+", HL2_FONT, nil, -17);
   HL2PICKUP:AddItemIcon("item_battery", "*", HL2_FONT, nil, -17);
   HL2PICKUP:AddItemOverride("item_healthvial");
+  HL2PICKUP:AddItemOverride("item_grubnugget");
 
   -- HL2 REDUX TFA weapons
   HL2PICKUP:AddWeaponIcon("tfa_hl2r_crowbar", "c", HL2_FONT);
