@@ -66,6 +66,7 @@ if CLIENT then
   hook.Add("HUDPaint", "hl2pickup_draw", function()
     if (not HL2PICKUP:IsEnabled()) then return; end
     Animate();
+    if (not LocalPlayer():IsSuitEquipped()) then return; end
     --draw.RoundedBox(0, ScrW() - 200, (ScrH() * 0.76) - height, 200, height, Color(0, 0, 255));
     HL2PICKUP:DrawPickupTray(ScrW(), ScrH() - (171 * HL2PICKUP:GetScale()));
   end);
