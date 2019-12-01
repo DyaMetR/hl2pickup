@@ -48,6 +48,7 @@ if CLIENT then
 
   -- Ammo icons list
   HL2PICKUP.AmmoIcons = {};
+  HL2PICKUP.AmmoWeaponIcons = {};
 
   --[[
     Adds a font based ammo icon
@@ -205,6 +206,33 @@ if CLIENT then
   end
 
   --[[
+    For EP2 style; sets a weapon (icon) to display when picking up ammunition
+    @param {string} ammunition type
+    @param {string} weapon class
+  ]]
+  function HL2PICKUP:AddWeaponForAmmoIcon(ammoType, weapon)
+    HL2PICKUP.AmmoWeaponIcons[ammoType] = weapon;
+  end
+
+  --[[
+    For EP2 style; returns whether an ammo type has a weapon tied to it
+    @param {string} ammunition type
+    @return {boolean} has weapon icon
+  ]]
+  function HL2PICKUP:AmmoHasWeaponIcon(ammoType)
+    return HL2PICKUP.AmmoWeaponIcons[ammoType] ~= nil;
+  end
+
+  --[[
+    For EP2 style; returns the weapon tied to the given ammo type
+    @param {string} ammunition type
+    @return {string} weapon class
+  ]]
+  function HL2PICKUP:GetAmmoWeaponIcon(ammoType)
+    return HL2PICKUP.AmmoWeaponIcons[ammoType];
+  end
+
+  --[[
     Draws an ammo pickup
     @param {number} x
     @param {number} y
@@ -220,11 +248,18 @@ if CLIENT then
     if (isFull) then
       local colour = HL2PICKUP:GetCritColour();
       HL2PICKUP:DrawAmmoIcon(x, y, ammoType, alpha, colour);
-      draw.SimpleText("FULL", "HudHintTextLarge", x + 8, y - HL2PICKUP:GetScale(), Color(colour.r, colour.g, colour.b, colour.a * alpha), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER);
+      draw.SimpleText("FULL", "HudHintTextLarge", x + 8, y + HL2PICKUP:GetScale(), Color(colour.r, colour.g, colour.b, colour.a * alpha), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER);
     else
       local colour = HL2PICKUP:GetColour();
-      HL2PICKUP:DrawAmmoIcon(x, y, ammoType, alpha);
-      draw.SimpleText(amount, NUMBER_FONT, x + 8, y - HL2PICKUP:GetScale(), Color(colour.r, colour.g, colour.b, colour.a * alpha), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER);
+      local offset = 0;
+      if (HL2PICKUP:IsEP2ModeEnabled() and HL2PICKUP:AmmoHasWeaponIcon(ammoType)) then
+        local weapon = HL2PICKUP:GetAmmoWeaponIcon(ammoType);
+        local iW, iH = HL2PICKUP:GetWeaponIconSize(weapon, 0.5);
+        HL2PICKUP:DrawWeaponIcon(x + (4 * HL2PICKUP:GetScale()), y, weapon, alpha, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER, 0.5);
+        offset = iW + (3 * HL2PICKUP:GetScale());
+      end
+      HL2PICKUP:DrawAmmoIcon(x - offset, y, ammoType, alpha);
+      draw.SimpleText(amount, NUMBER_FONT, x + (8 * HL2PICKUP:GetScale()), y - HL2PICKUP:GetScale(), Color(colour.r, colour.g, colour.b, colour.a * alpha), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER);
     end
   end
 

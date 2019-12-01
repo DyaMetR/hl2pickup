@@ -17,6 +17,12 @@ if CLIENT then
       }
     );
 
+    panel:AddControl( "CheckBox", {
+      Label = "EP2 mode enabled",
+      Command = "hl2pickup_ep2_enabled",
+      }
+    );
+
     local combobox, label = panel:ComboBox("Ammunition icon style", "hl2pickup_ammo_mode");
     combobox:AddChoice("Default", 0);
     combobox:AddChoice("Icons only", 1);

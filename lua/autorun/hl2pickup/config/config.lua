@@ -12,6 +12,7 @@ if CLIENT then
   local DEFAULT_CONFIG = {
     ["hl2pickup_enabled"] = 1,
     ["hl2pickup_weapon_sound"] = 1,
+    ["hl2pickup_ep2_enabled"] = 0,
     ["hl2pickup_ammo_mode"] = 0,
     ["hl2pickup_item_mode"] = 0,
     ["hl2pickup_time"] = 5,
@@ -34,6 +35,14 @@ if CLIENT then
   ]]
   function HL2PICKUP:IsEnabled()
     return GetConVar("hl2pickup_enabled"):GetInt() > 0;
+  end
+
+  --[[
+    Returns whether the episode 2 mode is enabled
+    @return {boolean} enabled
+  ]]
+  function HL2PICKUP:IsEP2ModeEnabled()
+    return GetConVar("hl2pickup_ep2_enabled"):GetInt() > 0;
   end
 
   --[[

@@ -9,12 +9,21 @@ if CLIENT then
   local WIDTH, HEIGHT = 128, 64;
   local INVALID_CHAR = "�";
   local DEFAULT_FONT = "hl2pickup_weapon";
+  local DEFAULT_FONT_SMALL = "hl2pickup_weapon_small";
   local DEFAULT_RB_FONT = "hl2pickup_icon_rb";
 
   -- Default fonts
   surface.CreateFont(DEFAULT_FONT, {
     font = "HalfLife2",
     size = 102 * HL2PICKUP:GetScale(),
+    weight = 500,
+    antialias = true,
+    additive = true
+  });
+
+  surface.CreateFont(DEFAULT_FONT_SMALL, {
+    font = "HalfLife2",
+    size = 52 * HL2PICKUP:GetScale(),
     weight = 500,
     antialias = true,
     additive = true
@@ -38,9 +47,20 @@ if CLIENT then
     @param {string} font
     @param {number|nil} x
     @param {number|nil} y
+    @param {string|nil} font (small icon)
+    @param {number|nil} x (small icon)
+    @param {number|nil} y (small icon)
   ]]
-  function HL2PICKUP:AddWeaponIcon(weaponClass, char, font, x, y)
-    HL2PICKUP.WeaponIcons[weaponClass] = {char = char, font = font, x = x or 0, y = y or 0};
+  function HL2PICKUP:AddWeaponIcon(weaponClass, char, font, x, y, smallFont, sX, sY)
+    HL2PICKUP.WeaponIcons[weaponClass] = {
+      char = char,
+      font = font,
+      x = x or 0,
+      y = y or 0,
+      smallFont = smallFont,
+      sX = sX or 0,
+      sY = sY or 0
+    };
   end
 
   --[[
@@ -92,19 +112,23 @@ if CLIENT then
   end
 
   --[[
-    Returns the height of an weapon icon
+    Returns the size of an weapon icon
     @param {string} ammunition type
+    @param {number|nil} scale
+    @return {number} width
     @return {number} height
   ]]
-  function HL2PICKUP:GetWeaponIconHeight(weaponClass)
-    if (not HL2PICKUP:HasWeaponIcon(weaponClass)) then return WIDTH * HL2PICKUP:GetScale() * 0.83, HEIGHT * HL2PICKUP:GetScale() * 0.83; end
+  function HL2PICKUP:GetWeaponIconSize(weaponClass, scale)
+    scale = scale or 1;
+    if (not HL2PICKUP:HasWeaponIcon(weaponClass)) then return WIDTH * HL2PICKUP:GetScale() * scale * 0.83, HEIGHT * HL2PICKUP:GetScale() * scale * 0.83; end
     local data = HL2PICKUP:GetWeaponIcon(weaponClass);
     if (data.texture ~= nil) then
-      return data.h * HL2PICKUP:GetScale();
+      return data.w * HL2PICKUP:GetScale() * scale, data.h * HL2PICKUP:GetScale() * scale;
     else
-      surface.SetFont(data.font);
-      local w, h = surface.GetTextSize(data.char);
-      return h;
+      local font = data.font;
+      if (scale < 1 and data.smallFont) then font = data.smallFont; end
+      surface.SetFont(font);
+      return surface.GetTextSize(data.char);
     end
   end
 
@@ -116,14 +140,17 @@ if CLIENT then
     @param {number|nil} alpha
     @param {number|nil} horizontal alignment
     @param {number|nil} vertical alignment
+    @param {number|nil} scale
   ]]
-  function HL2PICKUP:DrawWeaponIcon(x, y, weapon, alpha, horAlign, verAlign)
-    if (not IsValid(weapon)) then return; end
+  function HL2PICKUP:DrawWeaponIcon(x, y, weapon, alpha, horAlign, verAlign, scale)
+    if (type(weapon) == "Weapon" and not IsValid(weapon)) then return; end
+    scale = scale or 1;
     alpha = alpha or 1;
     horAlign = horAlign or TEXT_ALIGN_RIGHT;
     verAlign = verAlign or TEXT_ALIGN_BOTTOM;
     local colour = HL2PICKUP:GetColour();
-    local weaponClass = weapon:GetClass();
+    local weaponClass = weapon;
+    if (type(weapon) == "Weapon") then weaponClass = weapon:GetClass(); end
 
     -- Set missing colour if necessary
     if (not LocalPlayer():HasWeapon(weaponClass)) then
@@ -131,11 +158,13 @@ if CLIENT then
     end
 
     -- Get icon size
-    local w, h = WIDTH * HL2PICKUP:GetScale(), HEIGHT * HL2PICKUP:GetScale();
+    local w, h = WIDTH, HEIGHT;
     if (HL2PICKUP:HasWeaponIcon(weaponClass) and HL2PICKUP:GetWeaponIcon(weaponClass).texture ~= nil) then
-      w = HL2PICKUP:GetWeaponIcon(weaponClass).w * HL2PICKUP:GetScale();
-      h = HL2PICKUP:GetWeaponIcon(weaponClass).h * HL2PICKUP:GetScale();
+      w = HL2PICKUP:GetWeaponIcon(weaponClass).w;
+      h = HL2PICKUP:GetWeaponIcon(weaponClass).h;
     end
+    w = w * HL2PICKUP:GetScale() * scale;
+    h = h * HL2PICKUP:GetScale() * scale;
 
     -- Setup alignment
     local tX, tY = x, y; -- Texture based icon offsets
@@ -171,14 +200,17 @@ if CLIENT then
         end
       else
         -- Draw font icon
-        draw.SimpleText(data.char, data.font, x, y, Color(colour.r, colour.g, colour.b, colour.a * alpha), horAlign, verAlign);
+        local font = data.font;
+        if (scale < 1 and data.smallFont) then font = data.smallFont; end
+        draw.SimpleText(data.char, font, x, y, Color(colour.r, colour.g, colour.b, colour.a * alpha), horAlign, verAlign);
       end
     else
-      if (weapon:IsScripted() and weapon.DrawWeaponSelection ~= nil) then
+      if (type(weapon) == "Weapon" and weapon:IsScripted() and weapon.DrawWeaponSelection ~= nil) then
         local bounce, info = weapon.BounceWeaponIcon, weapon.DrawWeaponInfoBox;
+        local iW, iH = HL2PICKUP:GetWeaponIconSize(weaponClass);
         weapon.BounceWeaponIcon = false;
         weapon.DrawWeaponInfoBox = false;
-        weapon:DrawWeaponSelection( tX, y - (h * 1.15 * 0.5) - (HL2PICKUP:GetWeaponIconHeight(weaponClass) * 0.5), w * 1.15, h * 1.15, 255 * alpha );
+        weapon:DrawWeaponSelection( tX, y - (h * 1.15 * 0.5) - (iH * 0.5), w * 1.15, h * 1.15, 255 * alpha );
         weapon.BounceWeaponIcon = bounce;
         weapon.DrawWeaponInfoBox = info;
       else

@@ -6,6 +6,7 @@
 if CLIENT then
 
   local HL2_FONT = "hl2pickup_weapon";
+  local HL2_FONT_SMALL = "hl2pickup_weapon_small";
   local RB_FONT = "hl2pickup_icon_rb";
 
   -- Half-Life 2 weapons
@@ -13,14 +14,14 @@ if CLIENT then
   HL2PICKUP:AddWeaponIcon("weapon_physcannon", "m", HL2_FONT);
   HL2PICKUP:AddWeaponIcon("weapon_crowbar", "c", HL2_FONT);
   HL2PICKUP:AddWeaponIcon("weapon_stunstick", "n", HL2_FONT);
-  HL2PICKUP:AddWeaponIcon("weapon_pistol", "d", HL2_FONT);
-  HL2PICKUP:AddWeaponIcon("weapon_357", "e", HL2_FONT);
-  HL2PICKUP:AddWeaponIcon("weapon_smg1", "a", HL2_FONT);
-  HL2PICKUP:AddWeaponIcon("weapon_ar2", "l", HL2_FONT);
-  HL2PICKUP:AddWeaponIcon("weapon_shotgun", "b", HL2_FONT);
-  HL2PICKUP:AddWeaponIcon("weapon_crossbow", "g", HL2_FONT);
+  HL2PICKUP:AddWeaponIcon("weapon_pistol", "d", HL2_FONT, nil, nil, HL2_FONT_SMALL);
+  HL2PICKUP:AddWeaponIcon("weapon_357", "e", HL2_FONT, nil, nil, HL2_FONT_SMALL);
+  HL2PICKUP:AddWeaponIcon("weapon_smg1", "a", HL2_FONT, nil, nil, HL2_FONT_SMALL);
+  HL2PICKUP:AddWeaponIcon("weapon_ar2", "l", HL2_FONT, nil, nil, HL2_FONT_SMALL);
+  HL2PICKUP:AddWeaponIcon("weapon_shotgun", "b", HL2_FONT, nil, nil, HL2_FONT_SMALL);
+  HL2PICKUP:AddWeaponIcon("weapon_crossbow", "g", HL2_FONT, nil, nil, HL2_FONT_SMALL);
   HL2PICKUP:AddWeaponIcon("weapon_frag", "k", HL2_FONT);
-  HL2PICKUP:AddWeaponIcon("weapon_rpg", "i", HL2_FONT);
+  HL2PICKUP:AddWeaponIcon("weapon_rpg", "i", HL2_FONT, nil, nil, HL2_FONT_SMALL);
   HL2PICKUP:AddWeaponIcon("weapon_slam", "o", HL2_FONT);
   HL2PICKUP:AddWeaponIcon("weapon_bugbait", "j", HL2_FONT);
 

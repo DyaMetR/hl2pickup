@@ -56,7 +56,7 @@ if SERVER then
   hook.Add("PlayerCanPickupItem", "hl2pickup_full", function( player, item )
     if (not player:Alive() or not IsValid(item)) then return; end
     local ammoType = HL2PICKUP:GetAmmoEntity(item:GetClass());
-    if (HL2PICKUP:HasAmmoEntity(item:GetClass()) and (not GAMEMODE:PlayerCanPickupItem(player, item) or player:GetAmmoCount(ammoType) >= 9999)) then
+    if (HL2PICKUP:HasAmmoEntity(item:GetClass()) and (not GAMEMODE:PlayerCanPickupItem(player, item) or player:GetAmmoCount(ammoType) >= GetConVar("gmod_maxammo"):GetInt())) then
       HL2PICKUP:SendFullAmmoNotice(player, ammoType);
     end
   end);

@@ -21,6 +21,17 @@ if CLIENT then
   HL2PICKUP:AddAmmoIcon("RPG_Round", "x", HL2_FONT);
   HL2PICKUP:AddAmmoIcon("slam", "*", DM_FONT, nil, 12);
 
+  -- Default Half-Life 2 weapon icons for ammunition types
+  HL2PICKUP:AddWeaponForAmmoIcon("Pistol", "weapon_pistol");
+  HL2PICKUP:AddWeaponForAmmoIcon("357", "weapon_357");
+  HL2PICKUP:AddWeaponForAmmoIcon("SMG1", "weapon_smg1");
+  HL2PICKUP:AddWeaponForAmmoIcon("SMG1_Grenade", "weapon_smg1");
+  HL2PICKUP:AddWeaponForAmmoIcon("AR2", "weapon_ar2");
+  HL2PICKUP:AddWeaponForAmmoIcon("AR2AltFire", "weapon_ar2");
+  HL2PICKUP:AddWeaponForAmmoIcon("Buckshot", "weapon_shotgun");
+  HL2PICKUP:AddWeaponForAmmoIcon("XBowBolt", "weapon_crossbow");
+  HL2PICKUP:AddWeaponForAmmoIcon("RPG_Round", "weapon_rpg");
+
 end
 
 if SERVER then
