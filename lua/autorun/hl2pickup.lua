@@ -1,7 +1,7 @@
 --[[----------------
 HL2 Pickup History
-  Version 1.2.0
-     01/12/19
+  Version 1.2.1
+     10/01/21
 By DyaMetR
 ]]------------------
 

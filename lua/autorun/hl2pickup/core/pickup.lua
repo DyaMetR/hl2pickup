@@ -7,6 +7,9 @@ local NET = "hl2pickup";
 
 if SERVER then
 
+  local MAX_AMMO_CONVAR = GetConVar("gmod_maxammo");
+  local FULL_WAIT = 5;
+
   util.AddNetworkString(NET);
 
   -- Item list
@@ -45,10 +48,19 @@ if SERVER then
     @param {string} ammunition type
   ]]
   function HL2PICKUP:SendFullAmmoNotice(player, ammoType)
+    if player.HL2PICKUP_FULL[ammoType] and player.HL2PICKUP_FULL[ammoType] > CurTime() then return end
     net.Start(NET);
     net.WriteString(ammoType);
     net.Send(player);
+    player.HL2PICKUP_FULL[ammoType] = CurTime() + FULL_WAIT;
   end
+
+  --[[
+    Initialize table for FULL ammo timers
+  ]]
+  hook.Add("PlayerInitialSpawn", "hl2pickup_spawn", function(player)
+    player.HL2PICKUP_FULL = {};
+  end)
 
   --[[
     Check whether a player can pickup an ammo entity
@@ -56,7 +68,10 @@ if SERVER then
   hook.Add("PlayerCanPickupItem", "hl2pickup_full", function( player, item )
     if (not player:Alive() or not IsValid(item)) then return; end
     local ammoType = HL2PICKUP:GetAmmoEntity(item:GetClass());
-    if (HL2PICKUP:HasAmmoEntity(item:GetClass()) and (not GAMEMODE:PlayerCanPickupItem(player, item) or player:GetAmmoCount(ammoType) >= GetConVar("gmod_maxammo"):GetInt())) then
+    if not HL2PICKUP:HasAmmoEntity(item:GetClass()) then return; end
+    local maxAmmo = MAX_AMMO_CONVAR:GetInt();
+    local ammo = player:GetAmmoCount(ammoType);
+    if (maxAmmo == 0 and ammo >= game.GetAmmoMax(game.GetAmmoID(ammoType))) or (maxAmmo > 0 and ammo >= maxAmmo) then
       HL2PICKUP:SendFullAmmoNotice(player, ammoType);
     end
   end);
@@ -71,7 +86,6 @@ if CLIENT then
     PICKUP_AMMO = 2,
     PICKUP_ITEM = 3
   };
-  local FULL_WAIT = 5;
 
   -- Variables
   HL2PICKUP.PickupTray = {};
@@ -147,10 +161,7 @@ if CLIENT then
   ]]
   net.Receive(NET, function(len)
     local ammoType = net.ReadString();
-    if (time < CurTime()) then
-      HL2PICKUP:AddPickup(ammoType, HL2PICKUP.ItemType.PICKUP_AMMO, -1, true);
-      time = CurTime() + FULL_WAIT;
-    end
+    HL2PICKUP:AddPickup(ammoType, HL2PICKUP.ItemType.PICKUP_AMMO, -1, true);
   end);
 
 end
