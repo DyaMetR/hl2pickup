@@ -62,6 +62,19 @@ if SERVER then
     player.HL2PICKUP_FULL = {};
   end)
 
+	--[[
+		Check whether a player can pick up a weapon's ammunition
+	]]
+	hook.Add("PlayerCanPickupWeapon", "hl2pickup_full_weapon", function( player, weapon )
+		if (not player:Alive() or not IsValid(weapon)) then return; end
+		local maxAmmo = MAX_AMMO_CONVAR:GetInt();
+		local ammoType = weapon:GetPrimaryAmmoType();
+    local ammo = player:GetAmmoCount(ammoType);
+		if (maxAmmo == 0 and ammo >= game.GetAmmoMax(ammoType)) or (maxAmmo > 0 and ammo >= maxAmmo) then
+      HL2PICKUP:SendFullAmmoNotice(player, game.GetAmmoName(ammoType));
+    end
+	end)
+
   --[[
     Check whether a player can pickup an ammo entity
   ]]
