@@ -63,11 +63,12 @@ if CLIENT then
   --[[
     Animate and draw the tray
   ]]
-  hook.Add("HUDPaint", "hl2pickup_draw", function()
+  hook.Add("HUDDrawPickupHistory", "hl2pickup_draw", function()
     if (not HL2PICKUP:IsEnabled()) then return; end
     Animate();
-    if (not LocalPlayer():IsSuitEquipped()) then return; end
+    if (not LocalPlayer():IsSuitEquipped()) then return true; end
     HL2PICKUP:DrawPickupTray(ScrW(), ScrH() - (171 * HL2PICKUP:GetScale()));
+    return true;
   end);
 
   --[[

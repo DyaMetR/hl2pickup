@@ -143,14 +143,13 @@ if CLIENT then
     @param {number|nil} scale
   ]]
   function HL2PICKUP:DrawWeaponIcon(x, y, weapon, alpha, horAlign, verAlign, scale)
-    if (type(weapon) == "Weapon" and not IsValid(weapon)) then return; end
+    if not IsValid(weapon) then return; end
     scale = scale or 1;
     alpha = alpha or 1;
     horAlign = horAlign or TEXT_ALIGN_RIGHT;
     verAlign = verAlign or TEXT_ALIGN_BOTTOM;
     local colour = HL2PICKUP:GetColour();
-    local weaponClass = weapon;
-    if (type(weapon) == "Weapon") then weaponClass = weapon:GetClass(); end
+    local weaponClass = weapon:GetClass();
 
     -- Set missing colour if necessary
     if (not LocalPlayer():HasWeapon(weaponClass)) then
@@ -205,7 +204,7 @@ if CLIENT then
         draw.SimpleText(data.char, font, x, y, Color(colour.r, colour.g, colour.b, colour.a * alpha), horAlign, verAlign);
       end
     else
-      if (type(weapon) == "Weapon" and weapon:IsScripted() and weapon.DrawWeaponSelection ~= nil) then
+      if (weapon:IsWeapon() and weapon:IsScripted() and weapon.DrawWeaponSelection ~= nil) then
         local bounce, info = weapon.BounceWeaponIcon, weapon.DrawWeaponInfoBox;
         local iW, iH = HL2PICKUP:GetWeaponIconSize(weaponClass);
         weapon.BounceWeaponIcon = false;

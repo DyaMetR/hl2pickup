@@ -148,7 +148,6 @@ if CLIENT then
     if (not HL2PICKUP:IsEnabled()) then return; end
     if (HL2PICKUP:IsWeaponPickupSoundEnabled()) then surface.PlaySound("items/ammo_pickup.wav"); end
     HL2PICKUP:AddPickup(weapon, HL2PICKUP.ItemType.PICKUP_WEAPON);
-    return true;
   end);
 
   --[[
@@ -157,7 +156,6 @@ if CLIENT then
   hook.Add("HUDAmmoPickedUp", "hl2pickup_weapon", function(ammoType, amount)
     if (not HL2PICKUP:IsEnabled()) then return; end
     HL2PICKUP:AddPickup(ammoType, HL2PICKUP.ItemType.PICKUP_AMMO, amount);
-    return true;
   end);
 
   --[[
@@ -166,7 +164,6 @@ if CLIENT then
   hook.Add("HUDItemPickedUp", "hl2pickup_item", function(item)
     if (not HL2PICKUP:IsEnabled()) then return; end
     HL2PICKUP:AddPickup(item, HL2PICKUP.ItemType.PICKUP_ITEM);
-    return true;
   end);
 
   --[[

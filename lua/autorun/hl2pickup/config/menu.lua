@@ -68,7 +68,7 @@ if CLIENT then
   end
 
   hook.Add( "PopulateToolMenu", "hl2pickup_menu_cl", function()
-    spawnmenu.AddToolMenuOption( "Options", "DyaMetR", "cl_hl2pickup", "HL2 Pickup History", "", "", menuComposition );
+    spawnmenu.AddToolMenuOption( "Utilities", "HL2 Pickup History", "cl_hl2pickup", "#spawnmenu.utilities.settings", nil, nil, menuComposition );
   end);
 
 end
